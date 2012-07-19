@@ -81,11 +81,30 @@ def latex():
     else:
         print('latex build has not been tested on windows')
 
+def texinfo():
+    check_build()
+    if sys.platform != 'win32':
+        # Texinfo format.
+        if os.system('sphinx-build -b texinfo -d build/doctrees '
+                     'source build/texinfo'):
+            raise SystemExit("Building Texinfo failed.")
+        # Produce pdf.
+
+        os.chdir('build/texinfo')
+
+        # Call the makefile produced by sphinx...
+        if os.system('make'):
+            raise SystemExit("Rendering Texinfo failed.")
+
+        os.chdir('../..')
+    else:
+        print('texinfo build has not been tested on windows')
+
 def check_build():
     build_dirs = [
         'build', 'build/doctrees', 'build/html',
-        'build/latex', 'build/plots', 'build/_static',
-        'build/_templates']
+        'build/latex', 'build/texinfo', 'build/plots',
+        'build/_static', 'build/_templates']
     for d in build_dirs:
         try:
             os.mkdir(d)
@@ -188,6 +207,7 @@ funcd = {
     'upload_dev_pdf' : upload_dev_pdf,
     'upload_stable_pdf' : upload_stable_pdf,
     'latex'    : latex,
+    'texinfo'  : texinfo,
     'clean'    : clean,
     'auto_dev' : auto_dev_build,
     'auto_debug' : lambda: auto_dev_build(True),

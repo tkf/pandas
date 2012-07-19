@@ -246,3 +246,11 @@ extlinks = {'pull request': ('https://github.com/pydata/pandas/pulls/%s',
                       
 extlinks = {'wiki': ('https://github.com/pydata/pandas/pulls/%s',
                       'wiki ')}
+
+
+texinfo_documents = [
+  (master_doc, 'pandas', 'pandas documentation',
+   'pandas development team',
+   'pandas', 'powerful Python data analysis toolkit', 'Programming',
+   1),
+]
